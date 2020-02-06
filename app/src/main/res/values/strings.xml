@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PlaceRouteDemo</string>
+    <string name="api_key">AIzaSyAfehzs_lJg0g-Nj4qv6A-58VyomxbDZjY</string>
+    <string name="api_key_places">AIzaSyDK2Du7rvxW4d4NQmKg8qAyxaZ0dGgaY5k</string>
+</resources>
