@@ -1,10 +1,14 @@
 package com.example.placeroutedemo;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.android.PolyUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -59,5 +63,26 @@ public class GetDirectionData extends AsyncTask<Object, String, String> {
                 .snippet("Distance:" + distance);
 
                 mMap.addMarker(options);
+
+                if(MainActivity.directionRequested) {
+                    String[] directionList;
+                    DataParser directionParser = new DataParser();
+                    directionList = directionParser.parseDirection(s);
+                    displayDirections(directionList);
+                }
+    }
+
+    private void displayDirections(String[] directionsList){
+
+        int count = directionsList.length;
+        for (int i = 0; i<count; i++){
+            PolylineOptions options = new PolylineOptions()
+                    .color(Color.RED)
+                    .width(10)
+                    .addAll(PolyUtil.decode(directionsList[i]));
+            mMap.addPolyline(options);
+
+
+        }
     }
 }

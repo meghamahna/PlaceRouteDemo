@@ -114,4 +114,50 @@ public class DataParser {
         return directionMap;
     }
 
+    public String[] parseDirection(String jsonData){
+
+        JSONArray jsonArray = null;
+
+        try {
+            JSONObject jsonObject = new JSONObject(jsonData);
+            jsonArray = jsonObject.getJSONArray("routes").getJSONObject(0).getJSONArray("legs")
+                    .getJSONObject(0).getJSONArray("steps");
+        }
+
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return getPaths(jsonArray);
+    }
+
+    private String[] getPaths(JSONArray jsonArray){
+        int count = jsonArray.length();
+        String[] polyLines = new String[count];
+
+        for (int i = 0; i < count; i++){
+
+            try {
+                polyLines[i] = getPath(jsonArray.getJSONObject(i));
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return polyLines;
+    }
+
+    private String getPath(JSONObject jsonObject){
+        String polyLine = "";
+
+        try {
+            polyLine = jsonObject.getJSONObject("polyline").getString("points");
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return polyLine;
+    }
+
+
+
 }
